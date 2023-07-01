@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大樂透神來也</title>
+    <style>
+        body {
+            background-color: gold;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        #container {
+            text-align: center;
+            width: 60%;
+            margin: 0 auto;
+        }
+
+        .name {
+            color: aquamarine;
+        }
+
+        .date {
+            font-size: 24px;
+            font-weight: bold;
+            background-color: cadetblue;
+        }
+
+        .ball {
+            background-color: honeydew;
+            color: midnightblue;
+        }
+
+        .lottory-block {
+            background-color: deeppink;
+            /* display: block; */
+            width: 100%;
+            margin: 20px auto;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <h3>大樂透資訊</h3>
+        <h3>目前頭獎預估金額</h3>
+        <h4>威力彩: {{dollars[0]}}</h4>
+        <h4>大樂透: {{dollars[1]}}</h4>
+
+        <form action="/lotto">
+            <button type="submit" id="button-flash">Click!</button>
+        </form>
+        <h4>目前時間:
+
+            <body onload="ShowTime()">
+                <div id="showbox"></div>
+            </body>
+        </h4>
+
+        {%for name, value in lotto.items()%}
+        <div class="lottory-block">
+            <img src="https://www.taiwanlottery.com.tw/images/intx_logo0{{loop.index}}.gif" alt="">
+            <p class="name">{{name}}</p>
+            <p class="date">{{value[0]}}</p>
+            <p class="ball">{{value[1]}}</p>
+            {%endfor%}
+        </div>
+
+
+
+    </div>
+</body>
+
+<script language="JavaScript">
+    function ShowTime() {
+        let NowDate = new Date();
+        let h = NowDate.getHours();
+        let m = NowDate.getMinutes();
+        let s = NowDate.getSeconds();
+        document.getElementById('showbox').innerHTML = h + '時' + m + '分' + s + '秒';
+        setTimeout('ShowTime()', 1000);
+    }
+</script>
+
+</html>

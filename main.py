@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from datetime import datetime
-
+from crawler.stock import get_stocks
+from crawler.lottory import get_lottory
 
 app = Flask(__name__)
 
@@ -42,9 +43,21 @@ def index():
 
 @app.route("/stock")
 def stock():
-    for stock in stocks:
-        print(stock["分類"], stock["指數"])
-    return render_template("stock.html", stocks=stocks, now=now())
+    stocks = get_stocks()
+    # for stock in stocks:
+    #     print(stock["分類"], stock["指數"])
+    return render_template("stock.html", stocks=get_stocks(), now=now())
+
+
+@app.route("/lotto")
+def lotto():
+    lottory_group = {"威力彩": "02", "大樂透": "04", "今彩539": "06"}
+    lotto = get_lottory()[1]
+    dollars = get_lottory()[0]
+
+    return render_template(
+        "lotto.html", lotto=get_lottory()[1], dollars=get_lottory()[0]
+    )
 
 
 def now():
@@ -55,6 +68,7 @@ def now():
 
 if __name__ == "__main__":
     # print(stock())
+    # print(get_stocks())
     # 資料固定所以放這裡
     stocks = [
         {"分類": "日經指數", "指數": "22,920.30"},
@@ -62,4 +76,5 @@ if __name__ == "__main__":
         {"分類": "香港恆生", "指數": "25,083.71"},
         {"分類": "上海綜合", "指數": "3,380.68"},
     ]
+
     app.run(debug=True)

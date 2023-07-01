@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stocks!</title>
+    <style>
+        body {
+            background-color: darkgray;
+        }
+
+        #container {
+            text-align: center;
+            width: 60%;
+            margin: 0 auto;
+        }
+
+        li {
+            width: 200px;
+            list-style-type: none;
+            display: inline-block;
+            background-color: mediumvioletred;
+            color: chartreuse;
+            padding: 12px;
+            margin: 6px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- {{stocks}} -->
+    <div id="container">
+        <h3>亞股資訊</h3>
+        <h4>目前時間: {{now}}</h4>
+        <ul>
+            {%for i in stocks%}
+            <li>
+                {{i.分類}}, {{i.指數}}
+            </li>
+
+            {%endfor%}
+        </ul>
+    </div>
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PM2.5</title>
+</head>
+
+<body>
+    <h3>pm2.5即時資訊</h3>
+    <h4>現在時間:
+
+        <body onload="ShowTime()">
+            <div id="showbox"></div>
+        </body>
+    </h4>
+    <h4 id="fresh"></h4>
+    <form action="/pm25" method="POST">
+        <input type="checkbox" name="sort" id="sort" {% if sort %} checked{% endif %}>排序
+        <button type="submit" id="button-flash">Click!</button>
+    </form>
+    <table border="1">
+        <thead>
+            <tr>
+                {% for column in columns %}
+                <th>{{column}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for value in values %}
+            <tr>
+                {% for data in value%}
+                <td>{{data}}</td>
+                {%endfor%}
+            </tr>
+
+            {%endfor%}
+        </tbody>
+        <!-- {{values}} -->
+    </table>
+</body>
+<script language="JavaScript">
+    function ShowTime() {
+        let NowDate = new Date();
+        let h = NowDate.getHours();
+        let m = NowDate.getMinutes();
+        let s = NowDate.getSeconds();
+        document.getElementById('showbox').innerHTML = h + '時' + m + '分' + s + '秒';
+        setTimeout('ShowTime()', 1000);
+    }
+    const updateTextEl = document.querySelector("#fresh");
+    console.log(updateTextEl);
+    // if (setInterval){
+    //     document.wri"更新中"te()
+    // }
+    document.getElementById("#fresh");
+    setInterval(() => { location.reload(); }, 3000);
+
+
+
+</script>
+
+</html>

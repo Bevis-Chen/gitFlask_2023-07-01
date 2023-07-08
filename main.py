@@ -1,7 +1,9 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from datetime import datetime
 from crawler.stock import get_stocks
 from crawler.lottory import get_lottory
+from crawler.pm25 import get_pm25
+import requests
 
 app = Flask(__name__)
 
@@ -58,6 +60,21 @@ def lotto():
     return render_template(
         "lotto.html", lotto=get_lottory()[1], dollars=get_lottory()[0]
     )
+
+
+@app.route("/pm25", methods=["GET", "POST"])
+def pm25():
+    # print(request)
+    sort = True
+    # sort = request.args.get("sort")
+    # print(sort)
+    if request.method == "POST":
+        sort = request.form.get("sort")
+        print(sort)
+
+    columns, values = get_pm25(sort)
+
+    return render_template("pm25.html", sort=sort, columns=columns, values=values)
 
 
 def now():

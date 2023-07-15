@@ -21,6 +21,8 @@
         <input type="checkbox" name="sort" id="sort" {% if sort %} checked{% endif %}>排序
         <button type="submit" id="button-flash">Click!</button>
     </form>
+
+
     <table border="1">
         <thead>
             <tr>
@@ -39,7 +41,6 @@
 
             {%endfor%}
         </tbody>
-        <!-- {{values}} -->
     </table>
 </body>
 <script language="JavaScript">
@@ -54,11 +55,10 @@
     const updateTextEl = document.querySelector("#fresh");
     console.log(updateTextEl);
     // if (setInterval){
-    //     document.wri"更新中"te()
+    //     document.write("更新中")
     // }
     document.getElementById("#fresh");
-    setInterval(() => { location.reload(); }, 3000);
-
+    setInterval(() => { location.reload(); }, 300000);
 
 
 </script>

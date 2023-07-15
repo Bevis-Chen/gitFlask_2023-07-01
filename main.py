@@ -3,7 +3,9 @@ from datetime import datetime
 from crawler.stock import get_stocks
 from crawler.lottory import get_lottory
 from crawler.pm25 import get_pm25
+from crawler.pm25 import get_six_pm25
 import requests
+import json
 
 app = Flask(__name__)
 
@@ -62,6 +64,31 @@ def lotto():
     )
 
 
+@app.route("/six_countys", methods=["GET", "POST"])
+def six_countys():
+    datas = get_six_pm25()
+    # county, value, county=county
+    return render_template("six_county.html", datas=datas)
+
+
+@app.route("/pm-json", methods=["GET", "POST"])
+def get_pm25_json():
+    columns, values, highest, lowest = get_pm25()
+
+    site = [value[1] for value in values]
+    pm25 = [value[2] for value in values]
+    data = {
+        "count": len(site),
+        "columns": columns,
+        "site": site,
+        "pm25": pm25,
+        "highest": highest,
+        "lowest": lowest,
+    }
+    print(data)
+    # return json.dumps(data, ensure_ascii=False)
+
+
 @app.route("/pm25", methods=["GET", "POST"])
 def pm25():
     # print(request)
@@ -75,6 +102,17 @@ def pm25():
     columns, values = get_pm25(sort)
 
     return render_template("pm25.html", sort=sort, columns=columns, values=values)
+
+
+# @app.route("/pm25-data")
+# def get_pm25_json():
+#     columns, values = get_pm25(sort=False)
+
+#     site = [value[1] for value in values]
+#     pm25 = [value[2] for value in values]
+#     data = {"columns": columns, "site": site, "pm25": pm25}
+
+#     return json.dumps(data, ensure_ascii=False)
 
 
 def now():
@@ -93,5 +131,6 @@ if __name__ == "__main__":
         {"分類": "香港恆生", "指數": "25,083.71"},
         {"分類": "上海綜合", "指數": "3,380.68"},
     ]
-
+    print()
+    get_pm25_json()
     app.run(debug=True)
